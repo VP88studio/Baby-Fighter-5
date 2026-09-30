@@ -27,6 +27,8 @@ def hitstatus():
 #game loop 
 running = True
 while running:
+    #babys 
+    babymask = pygame.mask.from_surface(imgrender.bb1.get_current_surface())
     current_time = pygame.time.get_ticks()
     mousepos = pygame.mouse.get_pos()
     for event in pygame.event.get():
@@ -35,11 +37,11 @@ while running:
             sys.exit()
         if event.type == pygame.KEYDOWN:
             if player1.status == 0:
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_d:
                     playery = 380
                     player1.status = 1
                     lactionstarttime = current_time
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_a:
                     player1.status = 2
                     playery = 350
                     ractionstarttime = current_time
@@ -49,10 +51,10 @@ while running:
     if babyx <= 50:
         babyx += 2
         babyy += 2
-    elif babyx >= 50 and babyx < 235: 
+    elif babyx >= 50 and babyx < 275: 
         babyx += 2
         babyy += 1
-    elif babyx >= 235:
+    elif babyx >= 275:
         babyy += 2
     if babyy == 501:
         babyx = -180
@@ -65,12 +67,16 @@ while running:
         player1.status = 0
         playery = 400 
     display.blit(imgrender.bg, (0, 0))
+    #offset (my life is a lie)
+
     if player1.imgstatus == 0:
         imgrender.static.render(display, (300, playery))
     if player1.imgstatus == 1:
         imgrender.lefthit.render(display, (325, playery))
+        imgrender.lb.render(display, (325, playery))
     if player1.imgstatus == 2:
         imgrender.righthit.render(display, (300, playery))
+        imgrender.rb.render(display, (300, playery))
     imgrender.bb1.render(display, (babyx, babyy))
     pygame.display.flip()
     clock.tick(60)
